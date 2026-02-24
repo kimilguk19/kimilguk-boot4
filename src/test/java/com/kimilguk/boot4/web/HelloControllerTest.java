@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
-@AutoConfigureMockMvc//API(/hello)경로로 접근하기 위한 샘플 MVC가 필요하다.
+@AutoConfigureMockMvc//API(/hello)경로로 접근하기 위해 MVC객체가 필요하다.
 @SpringBootTest//초기 코드 상단에 Junit5=주피터가 포함되어서 구현되는 @애노테이션을 추가.
 class HelloControllerTest {
 
