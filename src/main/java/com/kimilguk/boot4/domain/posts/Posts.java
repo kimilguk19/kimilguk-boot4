@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor//매개변수가 없는 기본생성자를 자동으로 추가한다. public Posts(){} 와 같은 효과이다. JPA에서 엔티티 클래스를 사용할 때는 기본생성자가 반드시 필요하다. JPA 구현체가 리플렉션을 사용하여 엔티티 인스턴스를 생성할 때, 매개변수가 없는 생성자를 호출하기 때문이다. 따라서 @NoArgsConstructor를 사용하여 기본생성자를 자동으로 생성된다.
 @Getter//엔티티 출력이 가능하게 구현된다 @NoArgsConstructor//엔티티 생성자를 자동으로 추가한다
 @Entity//엔티티와 매핑되는 저장소를 만든다
 public class Posts extends BaseTimeEntity {
