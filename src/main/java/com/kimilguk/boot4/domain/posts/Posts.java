@@ -35,5 +35,11 @@ public class Posts extends BaseTimeEntity {
 	   this.title = title;
 	   this.content = content;
 	   this.fileId = fileId;
+	}
+	@Override
+	public String toString() {
+		return "Posts [id=" + id + ", title=" + title + ", content=" + content + ", author=" + author + ", fileId="
+				+ fileId + "]";
 	} //테스트용 출력 오버라이드 메소드 추가(아래) 이클립스 Source -> Generate toString()… 사용
+	
 }
