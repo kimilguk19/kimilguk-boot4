@@ -1,0 +1,90 @@
+<!doctype html>
+
+<!-- head 태그 안에 들어가는 내용 시작:태그구조는 시작태그와 종료태그로 구성된다. -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scaleable=no">
+<title>html5 테스트 입니다.</title>
+<link rel="stylesheet" type="text/css" href="/resources/css/reset.css">
+<style>
+/* 인라인 스타일 내용 */
+</style>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script>
+	//위 jquery 자바스크립트 사용 기본형식(아래)
+	$(document).ready(function() {
+		alert("팝업 창 테스트");//여기에 사용자 액션 내용을 입력하시면 됩니다.
+	});
+</script>
+</head>
+<!-- head 태그 안에 들어가는 내용 끝 -->
+<!-- body 태그 안에 들어가는 내용 시작 -->
+<body>
+	<h1>헤드라인문자크기1</h1>
+	<h2>헤드라인문자크기2</h2>
+	<h3>헤드라인문자크기3</h3>
+	<h4>헤드라인문자크기4</h4>
+	<h5>헤드라인문자크기5</h5>
+	<a href="https://www.google.com">Hyper Text Mark Language 링크태그</a>
+	<img src="/images/app/spring.jpeg" alt="이미지 출력태그">
+	<p>
+		문단태그 <strong>강조태그</strong><br>줄바꿈태그 <b>bold태그</b>
+	</p>
+	<p>&nbsp;&nbsp;&nbsp;&nbsp; 공백문자 &amp;물음표문자 &lt; &gt; 꺽쇠문자
+		&copy;카피라이터
+	<hr>
+	수평선태그
+	</p>
+	<ul>
+		무 순서 태그
+		<li>리스트 1</li>
+		<li>리스트 2</li>
+	</ul>
+	<ol>
+		순서태그
+		<li>리스트 1</li>
+		<li>리스트 2</li>
+	</ol>
+	<div>
+		division 영역태그
+		<h2>폼태그(아래)</h2>
+		<form method="GET" action="http://localhost:8080/"
+			class="adminlogin_form">
+			성별을 선택해 주세요 <select name="score">
+				<option value="M">남자</option>
+				<option value="F">여자</option>
+			</select> <br>줄 바꿈 태그 <input type="text" name="userid"
+				preholder="user ID"> <br> <input type="password"
+				name="password" preholder="user password"> 첨부파일 <input
+				type="file"> <br>여러줄 입력태그
+			<textarea name="contents" cols="100" rows="5">여기에 글을 입력</textarea>
+			<input type="submit" name="submit" value="회원가입" class="login">
+		</form>
+	</div>
+	<br>
+	<table summary="00학교 00반 성적표 테이블 태그" style="border: 1px solid black">
+		<!-- 인라인 스타일 주기 -->
+		<thead class="thead-string">
+			<tr>
+				<th>이름</th>
+				<th>성적</th>
+			</tr>
+		</thead>
+		<tbody id="tbody">
+			<tr>
+				<td>김일국</td>
+				<td>15</td>
+			</tr>
+			<tr>
+				<td colspan="2">BBB</td>
+			</tr>
+			<tr>
+				<td>CCC</td>
+				<td>C</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+<!-- body 태그 안에 들어가는 내용 끝 -->
+</html>
