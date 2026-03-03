@@ -21,7 +21,7 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService;//생성자로 주입
 
-    @GetMapping("/posts")//전체게시물 Read
+    @GetMapping("/")//전체게시물 Read 접근 Api Url을 도메인 루트로 변경한다
     public String postList(@PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model) {
     Page<Posts> postsList = postsService.postsList(pageable);
     model.addAttribute("postsList", postsList);//게시글목록 5개
@@ -31,6 +31,6 @@ public class IndexController {
     model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());//이전페이지번호 사용
     model.addAttribute("nextCheck", postsList.hasNext());//다음페이지 있는지 체크
     model.addAttribute("next", pageable.next().getPageNumber());//다음페이지번호 사용
-    return "posts/post-list";//출력할 페이지명 posts폴더/post-list.mustache파일(html디자인템플릿)
+    return "index";//출력할 페이지명 posts폴더/post-list.mustache파일(html디자인템플릿)
     } // mustache템플릿 html 뷰 파일은 다음시간에 만든다.
 }
