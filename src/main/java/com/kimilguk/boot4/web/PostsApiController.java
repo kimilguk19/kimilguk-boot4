@@ -21,7 +21,7 @@ public class PostsApiController {
 	//로그 출력 객체생성
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService;//생성자로 주입
-  //포스트매핑은 페이지 폼에서 데이터 전송하면서 접근가능(보안)
+    //포스트매핑은 페이지 폼에서 데이터 전송하면서 접근가능(보안)
     @PostMapping("/api/posts/save")//저장:Create
     public Long save(@RequestBody PostsDto requestDto) {
         return postsService.save(requestDto);

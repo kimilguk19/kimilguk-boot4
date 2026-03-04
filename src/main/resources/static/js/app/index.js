@@ -144,7 +144,7 @@ var main = {
         };
         $.ajax({
             type: 'POST',
-            url: '/api/v1/posts',
+            url: '/api/posts/save',
             dataType: 'json',
             contentType: 'application/json; charset=utf-8',
             /*
