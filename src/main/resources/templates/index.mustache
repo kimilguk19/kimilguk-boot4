@@ -1,4 +1,15 @@
 {{>layout/header}}
+<script>
+$(document).ready(function() {
+    var totalPageSize = {{pageIndex}}; //5개 게시물기준 페이지 개수
+    var currPage = {{currPage}}; //현재페이지 번호
+    for(i = 0; i < totalPageSize; i++){
+            if(totalPageSize == null) { break; }
+            if(currPage == i) { disabled = "active";} else { disabled = ""; }
+            $("#pagination2").append('<li class="page-item '+disabled+'"><a class="page-link" href="?page='+i+'">'+(i+1)+'</a></li>');
+        } //여기서 ?page=i 에서 page는 개발자가 컨트롤러에서 변수를 추가코딩 하지 않아도 pageable 객체에서 자동으로 생성해주는 변수이다.
+});
+</script>
     <div class="col-md-12">
         <!-- 로그인 기능 영역 -->
         <div class="row">
@@ -51,20 +62,28 @@
             <td>{{modifiedDate}}</td>
         </tr>
         {{/postsList}}<!-- 반복문 종료코드: 반복구문을 열면 종료코드가 존재해야 한다. -->
-        <tr>
+        <!-- 기존 디자인용 출력 부분은 주석 처리한다 . <tr>
             <td>1</td>
             <td><a href="posts-read.html">게시물 제목 테스트</a></td>
             <td>admin</td>
             <td>2021.08.15</td>
-        </tr>
+        </tr>    -->
         </tbody>
     </table>
     <ul class="pagination justify-content-center">
-        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+        {{#prevCheck}}<!-- prevCheck가 객체(기능)으로 사용될 때는 #을 붙인다 -->
+        	<li class="page-item"><a class="page-link" href="?page={{previous}}">Previous</a></li>
+    	{{/prevCheck}}
+		<!-- prevCheck 객체가 존재할 때만 위의 Previous 버튼이 출력된다. -->
+        <!-- 디자인 출력을 주석처리하고, 아래 jQuery 액션으로 적용할 영역을 ul태그로 만든다. id로 구분 한다.
         <li class="page-item active"><a class="page-link" href="#">1</a></li>
         <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item"><a class="page-link" href="#">4</a></li>
-        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
+     	-->
+        <ul class="pagination justify-content-center" id="pagination2">
+    	</ul>
+    	</li>
+        {{#nextCheck}}   
+        <li class="page-item"><a class="page-link" href="?page={{next}}">Next</a></li>
+    	{{/nextCheck}}
+    </ul><!-- 여기서 ?page={{next}}에서 page는 개발자가 컨트롤러에서 코딩 하지 않아도 스프링부트에서 제공하는 pageable 객체에서 자동으로 생성해주는 변수이기 때문에 개발자는 사용만 하면 된다. -->
 {{>layout/footer}}

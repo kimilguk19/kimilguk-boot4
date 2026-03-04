@@ -24,7 +24,7 @@ public class IndexController {
     @GetMapping("/")//전체게시물 Read 접근 Api Url을 도메인 루트로 변경한다
     public String postList(@PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model) {
     Page<Posts> postsList = postsService.postsList(pageable);
-    model.addAttribute("postsList", postsList);//게시글목록 5개
+    model.addAttribute("postsList", postsList);//게시글목록 5개 이상 시 페이징 처리
     model.addAttribute("currPage", postsList.getPageable().getPageNumber());//현재페이지번호
     model.addAttribute("pageIndex", postsList.getTotalPages());//전체페이지개수
     model.addAttribute("prevCheck", postsList.hasPrevious());//이전페이지 있는지 체크
