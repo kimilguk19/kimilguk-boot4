@@ -8,18 +8,39 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.data.domain.Sort;
 import com.kimilguk.boot4.domain.posts.Posts;
 import com.kimilguk.boot4.service.posts.PostsService;
+import com.kimilguk.boot4.web.dto.PostsDto;
 
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor//final 매개변수가 있는 생성자메소드가 자동 생성된다
+@RequiredArgsConstructor//final 매개변수가 있을 때 생성자메소드가 자동 생성된다
 @Controller//일반컨트롤러는 반환 값으로 출력할 페이지를 지정한다
 public class IndexController {
 	//로그 출력 객체생성
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService;//생성자로 주입
+    @GetMapping("/posts/update/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
+    public String postsUpdate(@PathVariable("id") Long id, Model model) {
+        PostsDto dto = postsService.postsOne(id);//1개의 레코드만 가져온다.
+        model.addAttribute("post",dto);//모델객체에 담아서 mustache로 보낸다.
+        if(dto.getFileId() != null) {
+            //단일 첨부파일 처리는 이후 수업에서 작업예정 
+        }
+        return "posts/posts-update";
+    }
+    
+    @GetMapping("/posts/read/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
+    public String postsRead(@PathVariable("id") Long id, Model model) {
+    PostsDto dto = postsService.postsOne(id); //1개의 레코드만 가져온다.
+    model.addAttribute("post",dto); //모델객체에 담아서 mustache로 보낸다.
+    if(dto.getFileId() != null) {
+        //단일 첨부파일 처리는 이후 수업에서 작업예정 
+     }
+     return "posts/posts-read";
+   }
     
     @GetMapping("/posts/save")//Url주소와 posts-save.mustache를 매핑 시킨다.
     public String postsSave() {
