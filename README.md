@@ -2,7 +2,7 @@
 - 마이그레이션2 스프링부트4 프로젝트 : https://github.com/kimilguk19/kimilguk-boot4
 - 마이그레이션1 스프링부트3 프로젝트 : https://github.com/kimilguk/kimilguk-boot3
 - 최기 스프링부트2 프로젝트 : https://github.com/kimilguk/kimilguk-boot2
-### 스프링부트와 클라우드활용 강의용 깃 소스를 코파일럿AI 생성형 코딩사용과 스프링부트4로 마이그레이션
+### 스프링부트와 클라우드활용 강의용 깃 소스를 코파일럿AI 사용과 스프링부트4로 마이그레이션
 - 전자정부표준프레임워크5.0.0(Eclipse 2025-03(4.35), 자바21버전, Spring framework7.x, Spring Boot4.x 버전 사용)으로 변경된 항목(아래)
 - 기존 spring-boot-starter-web -> 신규 spring-boot-starter-webmvc 변경됨
 - 기존 spring-boot-starter-session -> 신규 spring-boot-starter-session-jdbc 변경됨
