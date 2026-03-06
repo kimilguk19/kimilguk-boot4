@@ -1,13 +1,17 @@
+### 스프링부트 마이그레이션 목록
+- 마이그레이션2 스프링부트4 프로젝트 : https://github.com/kimilguk19/kimilguk-boot4
+- 마이그레이션1 스프링부트3 프로젝트 : https://github.com/kimilguk/kimilguk-boot3
+- 최기 스프링부트2 프로젝트 : https://github.com/kimilguk/kimilguk-boot2
 ### 스프링부트와 클라우드활용 강의용 깃 소스를 코파일럿AI 생성형 코딩사용과 스프링부트4로 마이그레이션
-- 마이그레이션 스프링부트4 프로젝트 : https://github.com/kimilguk19/kimilguk-boot4
-- 마이그레이션 스프링부트3 프로젝트 : https://github.com/kimilguk/kimilguk-boot3
-- 기존 스프링부트2 프로젝트 : https://github.com/kimilguk/kimilguk-boot2
-- 전자정부표준프레임워크5.0.0(Eclipse 2025-03(4.35), 자바21버전, Spring framework7.x, Spring Boot4.x 버전 사용)으로 변경된 항목(아래 2가지 및 )
-- spring-boot-starter-web -> spring-boot-starter-webmvc 변경됨
-- spring-boot-starter-session -> spring-boot-starter-session-jdbc 변경됨
-- http.csrf().disable() -> http.csrf(csrf -> csrf.disable()) //Spring Security 6.1 버전부터 csrf() 메서드가 람다 식(Lambda expression)을 사용하는 방식으로 변경되고, @SpringBootApplication(exclude = SecurityAutoConfiguration.class) 처럼 exclude 방식이 작동하지 않습니다.
+- 전자정부표준프레임워크5.0.0(Eclipse 2025-03(4.35), 자바21버전, Spring framework7.x, Spring Boot4.x 버전 사용)으로 변경된 항목(아래)
+- 기존 spring-boot-starter-web -> 신규 spring-boot-starter-webmvc 변경됨
+- 기존 spring-boot-starter-session -> 신규 spring-boot-starter-session-jdbc 변경됨
+- 기존 http.csrf().disable() -> 신규 http.csrf(csrf -> csrf.disable()) //Spring Security 6.1 버전부터 csrf() 메서드내부를 람다 식(Lambda expression)을 사용하는 방식으로 변경되고, @SpringBootApplication(exclude = SecurityAutoConfiguration.class) 처럼 exclude 방식이 작동하지 않습니다.
+- 기존 spring-boot-starter-web -> 신규 spring-boot-starter-webmvc 로 변경 되면서 원래 하위에 존재하던 com.fasterxml.jackson.core 패키지가 사라짐. 그래서, implementation 'com.fasterxml.jackson.core:jackson-databind' 의존성을 수동으로 추가해야 됨.
+- 컨트롤러 클래스에서 @GetMapping("/posts/read/{id}")처럼 Url 패스경로에 id값을 사용하면, @PathVariable("id") 애노테이션을 사용해서 매소드의 매개변수명을 명시적으로 사용해야 된다.(스프링부투 3.4 이후 부터 변경)
+### 스프링부트와 클라우드활용 강의용 깃 소스를 스프링부트3로 마이그레이션
 - 참고로, Spring Boot3 버전부터 java17 아래버전으로 컴파일되지 않습니다.(자세한정보 아래)
-- 2022년 11월에 기존의 Spring framework 5 와 Spring Boot 2.X 버전을 대체하는 Spring framework6 과 Spring Boot3 가 릴리즈 되었습니다.
+- 기존 2022년 11월의 Spring framework5.x 와 Spring Boot 2.X 버전을 대체하는 2024년에 Spring framework6 과 Spring Boot3 가 릴리즈 되었습니다.
 - 스프링부트3에서 사용방법이 많이 변경된 이유는(아래)
 - JavaEE 상표권은 오라클이 갖고 있어서 오픈소스 그룸인 이클립스 재단에서 JavaEE 패키지 이름인 javax.* 를 사용할 수 없습니다.
 - 그래서, 이클립스 재단은 JakartaEE 이라 하고, 패키지는 jakarta.* 로 명명했습니다.
