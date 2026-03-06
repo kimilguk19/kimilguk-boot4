@@ -1,0 +1,15 @@
+{{>layout/header}}
+<!-- 에러 페이지내용 영역 -->
+    <h2>에러 페이지</h2>
+    <div class="col-md-12">
+        status : {{status}}<br>
+        message : {{message}}<br>
+        timestamp : {{timestamp}}<br>
+        {{#prevPage}}
+        이전페이지 : <a href="{{prevPage}}">{{prevPage}}</a>
+        {{/prevPage}}
+        {{^prevPage}}
+        이전페이지 : <a href="javascript:history.go(-1)">링크</a>
+        {{/prevPage}}
+    </div>
+{{>layout/footer}}
