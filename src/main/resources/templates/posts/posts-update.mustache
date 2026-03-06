@@ -29,6 +29,30 @@
                 <input type="hidden" name="file_id" id="file_id" value="">
                 {{/post.fileId}}
             </div>
+            <div class="form-group">
+                <label for="inputFile">단일 첨부 파일</label>
+                <div class="col-sm-10">
+                    <div class="custom-file" id="inputFile">
+                        <input name="file" type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">파일을 선택해 주세요.</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+	            <label for="inputFile">다중 첨부 파일</label>
+	            <div class="col-sm-10">
+	                <div class="custom-file" id="inputFile">
+	                    <input name="many_file" type="file" class="custom-file-input many_file">
+	                    <label class="custom-file-label">파일을 선택해 주세요.</label>
+	                </div>
+	            </div>
+	            <div class="col-sm-10">
+	                <div class="custom-file" id="inputFile">
+	                    <input name="many_file" type="file" class="custom-file-input many_file">
+	                    <label class="custom-file-label">파일을 선택해 주세요.</label>
+	                </div>
+	            </div>
+	        </div>
             <a href="/" role="button" class="btn btn-secondary">취소</a>
             <!-- 수정 버튼을 지우고 대신에 아래 2개의 버튼을 추가한다. -->
             <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
