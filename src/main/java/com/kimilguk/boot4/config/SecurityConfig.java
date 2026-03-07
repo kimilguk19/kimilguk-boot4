@@ -1,4 +1,4 @@
-package com.kimilguk.boot4;
+package com.kimilguk.boot4.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
