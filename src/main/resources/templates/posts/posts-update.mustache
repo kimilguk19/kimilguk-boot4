@@ -22,7 +22,9 @@
             <div class="form-group"><!--변수앞에 #이 붙으면 객체로서 조건,반복기능이 생긴다.-->
                 <label for="author"> 첨부파일</label>
                 {{#post.fileId}}
-                <a href="#">단일 첨부파일은 이후 수업에서 작업예정</a> 
+                <a href="/api/file_download/{{post.fileId}}">{{OrigFilename}}</a>
+                <button type="button" class="btn btn-danger" id="btn-delete-file">파일삭제</button>
+                <input type="hidden" name="file_id" id="file_id" value="{{post.fileId}}"> 
                 {{/post.fileId}}
                 <!-- 머스테치 에서 객체가 없을 때 조건 표시는 ^객체명 으로 표시한다. -->
                 {{^post.fileId}} <!-- 수정 시 첨부파일이 없을 때 처리에 필요해서 추가 이후 수업시간에 다룰 예정 이다. -->

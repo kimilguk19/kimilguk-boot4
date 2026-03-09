@@ -22,7 +22,7 @@
             <div class="form-group"><!--변수앞에 #이 붙으면 객체로서 조건,반복기능이 생긴다.-->
                 <label for="author"> 첨부파일</label>
                 {{#post.fileId}}
-                <a href="#">단일 첨부파일은 이후 수업에서 작업예정</a> 
+                <a href="/api/file_download/{{post.fileId}}">{{OrigFilename}}</a> 
                 {{/post.fileId}}
             </div>
             <a href="/" role="button" class="btn btn-secondary">취소</a>
