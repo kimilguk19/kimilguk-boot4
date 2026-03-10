@@ -10,6 +10,8 @@
 - 기존 spring-boot-starter-web -> 신규 spring-boot-starter-webmvc 로 변경 되면서 원래 하위에 존재하던 com.fasterxml.jackson.core 패키지가 사라짐. 그래서, implementation 'com.fasterxml.jackson.core:jackson-databind' 의존성을 수동으로 추가해야 됨.
 - 컨트롤러 클래스에서 @GetMapping("/posts/read/{id}")처럼 Url 패스경로에 id값을 사용하면, @PathVariable("id") 애노테이션을 사용해서 매소드의 매개변수명을 명시적으로 사용해야 된다.(스프링부트 3.4 이후 부터 변경)
 - WebSecurityConfigurerAdapter가 Deprecated 되어 현재는 SecurityFilterChain을 Bean으로 등록하여야한다.(스프링부트 3 이후 부터)
+- 스프링시큐리티 설정에서 formLogout 함수가 없어지고 logout 함수로 변경됨.(단, formLogin은 있음)
+
 ### 스프링부트와 클라우드활용 강의용 깃 소스를 스프링부트3로 마이그레이션
 - 참고로, Spring Boot3 버전부터 java17 아래버전으로 컴파일되지 않습니다.(자세한정보 아래)
 - 기존 2022년 11월의 Spring framework5.x 와 Spring Boot 2.X 버전을 대체하는 2024년에 Spring framework6 과 Spring Boot3 가 릴리즈 되었습니다.

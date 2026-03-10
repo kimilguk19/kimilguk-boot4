@@ -16,7 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.kimilguk.boot4.config.auth.Role;
 
 @EnableMethodSecurity //메소드 단위로 권한 체크를 할 수 있도록 활성화
-@EnableWebSecurity //웹 보안을 활성화하는 애노테이션
+@EnableWebSecurity //http Url 접근권한을 Role 레벨 별로 사용 가능하도록 활성화
 @Configuration
 public class SecurityConfig {
 	@Bean
