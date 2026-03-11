@@ -35,7 +35,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 	public @Nullable Object resolveArgument(MethodParameter parameter, @Nullable ModelAndViewContainer mavContainer,
 			NativeWebRequest webRequest, @Nullable WebDataBinderFactory binderFactory) throws Exception {
 		//return null;
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();//인증객체생성
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();//인증정보저장 객체생성
 	    String userName = authentication.getName();//admin, user, guest 중 1개가 들어간다.
 	    Role userAuthor = null;
 	    if(httpSession.getAttribute("user")==null && !"anonymousUser".equals(userName)) {//주, 초기 코딩 인증 값이 없을 때 anonymousUser 값을 갖는다. 하단 코딩에서 httpSession 을 set으로 넣는다.
