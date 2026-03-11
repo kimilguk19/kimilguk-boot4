@@ -15,14 +15,19 @@ $(document).ready(function() {
         <div class="row">
             <div class="col-md-6">
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
-                Looged in as : <span id="user">admin</span>
+                {{#sessionUserName}}
+                Looged in as : <span id="user">{{sessionUserName}}</span>
                 <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                {{#sessionRoleName}}
                 <a href="#" class="btn btn-secondary active" role="button">
                     회원관리
                 </a>
+                {{/sessionRoleName}}
                 <a href="#" class="btn btn-secondary active" role="button">
                     마이페이지
                 </a>
+                {{/sessionUserName}}
+                {{^sessionUserName}}
                 <a href="#" class="btn btn-success active" role="button">
                     Naver Login
                 </a>
@@ -32,6 +37,7 @@ $(document).ready(function() {
                 <a href=#" class="btn btn-secondary active" role="button">
                     회원가입
                 </a>
+                {{/sessionUserName}}
             </div>
         </div>
     </div>

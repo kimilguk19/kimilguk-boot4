@@ -10,6 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.data.domain.Sort;
+
+import com.kimilguk.boot4.config.auth.LoginUser;
+import com.kimilguk.boot4.config.auth.dto.SessionUser;
 import com.kimilguk.boot4.domain.posts.Posts;
 import com.kimilguk.boot4.service.posts.FileService;
 import com.kimilguk.boot4.service.posts.PostsService;
@@ -26,7 +29,11 @@ public class IndexController {
     private final PostsService postsService; //생성자로 주입
     private final FileService fileService;//생성자로 주입 이 필요
     @GetMapping("/posts/update/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
-    public String postsUpdate(@PathVariable("id") Long id, Model model) {
+    public String postsUpdate(@PathVariable("id") Long id, Model model,@LoginUser SessionUser user) {
+    	if(user != null) {
+            model.addAttribute("sesstionUserName", user.getName());
+            model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
+        }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
         PostsDto dto = postsService.postsOne(id);//1개의 레코드만 가져온다.
         model.addAttribute("post",dto);//모델객체에 담아서 mustache로 보낸다.
         if(dto.getFileId() != null) {
@@ -38,15 +45,19 @@ public class IndexController {
     }
     
     @GetMapping("/posts/read/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
-    public String postsRead(@PathVariable("id") Long id, Model model) {
-    PostsDto dto = postsService.postsOne(id); //1개의 레코드만 가져온다.
-    model.addAttribute("post",dto); //모델객체에 담아서 mustache로 보낸다.
-    if(dto.getFileId() != null) {
-    	//단일 첨부파일 처리는 이후 수업에서 작업(아래)
-        FileDto fileDto = fileService.getFile(dto.getFileId());
-        model.addAttribute("OrigFilename", fileDto.getOrigFilename()); 
-     }
-     return "posts/posts-read";
+    public String postsRead(@PathVariable("id") Long id, Model model,@LoginUser SessionUser user) {
+    	if(user != null) {
+            model.addAttribute("sesstionUserName", user.getName());
+            model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
+        }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
+	    PostsDto dto = postsService.postsOne(id); //1개의 레코드만 가져온다.
+	    model.addAttribute("post",dto); //모델객체에 담아서 mustache로 보낸다.
+	    if(dto.getFileId() != null) {
+	    	//단일 첨부파일 처리는 이후 수업에서 작업(아래)
+	        FileDto fileDto = fileService.getFile(dto.getFileId());
+	        model.addAttribute("OrigFilename", fileDto.getOrigFilename()); 
+	     }
+	     return "posts/posts-read";
    }
     
     @GetMapping("/posts/save")//Url주소와 posts-save.mustache를 매핑 시킨다.
@@ -55,15 +66,20 @@ public class IndexController {
     }
 
     @GetMapping("/")//전체게시물 Read 접근 Api Url을 도메인 루트로 변경한다
-    public String postList(@PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model) {
-    Page<Posts> postsList = postsService.postsList(pageable);
-    model.addAttribute("postsList", postsList);//게시글목록 5개 이상 시 페이징 처리
-    model.addAttribute("currPage", postsList.getPageable().getPageNumber());//현재페이지번호
-    model.addAttribute("pageIndex", postsList.getTotalPages());//전체페이지개수
-    model.addAttribute("prevCheck", postsList.hasPrevious());//이전페이지 있는지 체크
-    model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());//이전페이지번호 사용
-    model.addAttribute("nextCheck", postsList.hasNext());//다음페이지 있는지 체크
-    model.addAttribute("next", pageable.next().getPageNumber());//다음페이지번호 사용
-    return "index";//출력할 페이지명 posts폴더/post-list.mustache파일(html디자인템플릿)
+    public String postList(@PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model,@LoginUser SessionUser user) {
+    	if(user != null) {
+            model.addAttribute("sessionUserName", user.getName());
+            model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
+            System.out.print("세션값이 있을 때 user.getName(): " + user.getName());
+        }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
+    	Page<Posts> postsList = postsService.postsList(pageable);
+	    model.addAttribute("postsList", postsList);//게시글목록 5개 이상 시 페이징 처리
+	    model.addAttribute("currPage", postsList.getPageable().getPageNumber());//현재페이지번호
+	    model.addAttribute("pageIndex", postsList.getTotalPages());//전체페이지개수
+	    model.addAttribute("prevCheck", postsList.hasPrevious());//이전페이지 있는지 체크
+	    model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());//이전페이지번호 사용
+	    model.addAttribute("nextCheck", postsList.hasNext());//다음페이지 있는지 체크
+	    model.addAttribute("next", pageable.next().getPageNumber());//다음페이지번호 사용
+	    return "index";//출력할 페이지명 posts폴더/post-list.mustache파일(html디자인템플릿)
     } // mustache템플릿 html 뷰 파일은 다음시간에 만든다.
 }
