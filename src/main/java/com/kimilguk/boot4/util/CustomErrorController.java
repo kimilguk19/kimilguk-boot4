@@ -15,8 +15,8 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class CustomErrorController implements ErrorController {
 	//@RequestMapping(value="/error", method= {RequestMethod.GET})
-	@GetMapping("/error")
     //스프링부트2버전 이전에 사용하던 방식이다. 보통 스프링 부트에서는 @GetMapping("/error") 으로…
+	@GetMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
         //HttpServletRequest 클래스는 에러와 이전 경로를 포함하는 http전송상태 정보를 가진다.
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
