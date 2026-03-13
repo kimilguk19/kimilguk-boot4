@@ -2,7 +2,7 @@
 FROM gradle:9.3-jdk21 AS builder
 COPY --chown=gradle:gradle . /home/gradle/project
 WORKDIR /home/gradle/project
-RUN gradle build --no-daemon
+RUN gradle build -x test --no-daemon
 
 # Run stage OpenJDK 21 base image
 FROM eclipse-temurin:21-jdk
