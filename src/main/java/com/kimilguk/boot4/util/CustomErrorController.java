@@ -18,9 +18,9 @@ public class CustomErrorController implements ErrorController {
     public String handleError(HttpServletRequest request, Model model) {
         //HttpServletRequest 클래스는 에러와 이전 경로를 포함하는 http전송상태 정보를 가진다.
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        //에러코드에 매칭되는 상세정보를 가져온다.(아래)
-        HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
         if(status != null) {
+        	//보안때문에 에러코드에 매칭되는 간단한 정보를 가져온다.(아래)
+            HttpStatus httpStatus = HttpStatus.valueOf(Integer.valueOf(status.toString()));
             //이전 페이지로 돌아가는 링크 데이터 생성
             String referer = request.getHeader("Referer");
            //error.mustache 로 보내는 데이터를 model 에 담는다
