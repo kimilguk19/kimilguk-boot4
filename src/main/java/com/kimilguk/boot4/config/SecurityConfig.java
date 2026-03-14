@@ -23,9 +23,9 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()) // CSRF 비활성화
 				.authorizeHttpRequests(auth -> auth//.anyRequest().permitAll()) // 모든 요청 허용
-						.requestMatchers("/posts/read/**","/h2-console/**").permitAll()
+						.requestMatchers("/posts/read/**","/h2-console/**","/error/**").permitAll()
 						.requestMatchers("/api/**","/posts/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
-						.requestMatchers("/","/error/**").permitAll() // 특정 경로만 허용
+						.requestMatchers("/").permitAll() // 특정 경로만 허용
 						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // static 폴더만 허용
 						.anyRequest().authenticated()) // 기본요청은 모두인증 필요 해석은 뒤에서 부터
 				.formLogin(form -> form.defaultSuccessUrl("/")) //스프링시큐리티에 내장된 로그인 폼을 사용
