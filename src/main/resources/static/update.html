@@ -11,12 +11,31 @@
 </head>
 <body>
 <div class="container">
-
+<script>
+$(document).ready(function() {
+    var form_member = $('form[name="form_member"]');
+    $("#btn-member-delete").click(function() {
+        if(confirm("정말로 삭제 하시겠습니까?")) {
+            form_member.attr("action", "/simple_users/delete");
+            form_member.submit();
+        }
+    });
+    $("#role")
+        .find('option[value="머스테치 값"]')
+        .attr('selected', true);
+    $('input[name="enabled"]').each(function() {
+        if($(this).val() == "머스테치 값") {
+            $(this).prop('checked', true);
+        }else{
+            $(this).prop('checked', false);
+        }
+    });
+});
+</script>
     <h2>회원 수정</h2>
     <div class="col-md-12">
         <!-- form 태그의 action 속성 값은 컨트롤러의 PostMapping 값인 Url 과 같다. 다음시간에 예정  -->
-        <!-- form 태그의 action 속성 값은 컨트롤러의 PostMapping 값인 Url 과 같다. 다음시간에 예정  -->
-        <form method="post" action="/simple_users/save" name="form_posts" >
+        <form method="post" action="/simple_users/update" name="form_member" >
             <div class="form-group">
                 <label for="title">회원ID</label>
                <input readonly value="머스테치 값" type="text" class="form-control" name="username" placeholder="아이디를 입력하세요" required>
@@ -44,27 +63,6 @@
         </form><!-- submit 기능 때문에 닫는 폼 위치가 변경된 것에 주의 한다. -->
     </div>
 </div>
-<script>
-$(document).ready(function() {
-    var form_member = $('form[name="form_member"]');
-    $("#btn-member-delete").click(function() {
-        if(confirm("정말로 삭제 하시겠습니까?")) {
-            form_member.attr("action", "/simple_users/delete");
-            form_member.submit();
-        }
-    });
-    $("#role")
-        .find('option[value="머스테치 값"]')
-        .attr('selected', true);
-    $('input[name="enabled"]').each(function() {
-        if($(this).val() == "머스테치 값") {
-            $(this).prop('checked', true);
-        }else{
-            $(this).prop('checked', false);
-        }
-    });
-});
-</script>
 <script>
 $("#customFile").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
