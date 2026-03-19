@@ -56,7 +56,7 @@ public class SimpleUsersController {
     // …중략 이어서…
  // …중략 이전 장  이어서…
     @GetMapping("/simple_users/update/{username}") //회원상세 디자인보기
-    public String simpleUsersUpdate(@PathVariable String username,Model model,@LoginUser SessionUser user) {
+    public String simpleUsersUpdate(@PathVariable("username") String username,Model model,@LoginUser SessionUser user) {
         model.addAttribute("simple_user", simpleUsersService.findByName(username));
         return "simple_users/update";
     }

@@ -1,16 +1,4 @@
-<!doctype html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <title>스프링 부트 웹 서버</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/app/bgimg.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-<div class="container">
+{{>layout/header}}
 <script>
 $(document).ready(function() {
     var form_member = $('form[name="form_member"]');
@@ -21,10 +9,10 @@ $(document).ready(function() {
         }
     });
     $("#role")
-        .find('option[value="머스테치 값"]')
+        .find('option[value="{{simple_user.role}}"]')
         .attr('selected', true);
     $('input[name="enabled"]').each(function() {
-        if($(this).val() == "머스테치 값") {
+        if($(this).val() == "{{simple_user.enabled}}") {
             $(this).prop('checked', true);
         }else{
             $(this).prop('checked', false);
@@ -32,13 +20,14 @@ $(document).ready(function() {
     });
 });
 </script>
+<!-- 회원 수정내용이 들어갈 자리 -->
     <h2>회원 수정</h2>
     <div class="col-md-12">
         <!-- form 태그의 action 속성 값은 컨트롤러의 PostMapping 값인 Url 과 같다. 다음시간에 예정  -->
         <form method="post" action="/simple_users/update" name="form_member" >
             <div class="form-group">
                 <label for="title">회원ID</label>
-               <input readonly value="머스테치 값" type="text" class="form-control" name="username" placeholder="아이디를 입력하세요" required>
+               <input readonly value="{{simple_user.username}}" type="text" class="form-control" name="username" placeholder="아이디를 입력하세요" required>
             </div>
             <div class="form-group">
                 <label for="author">암호</label>
@@ -59,16 +48,7 @@ $(document).ready(function() {
          <a href="/simple_users/list" role="button" class="btn btn-secondary">취소</a>
          <button type="submit" class="btn btn-primary" id="btn-member-save">수정</button>
          <button type="button" class="btn btn-primary" id="btn-member-delete">삭제</button>
-         <input type="hidden" name="id" value="머스테치 값">
+         <input type="hidden" name="id" value="{{simple_user.id}}">
         </form><!-- submit 기능 때문에 닫는 폼 위치가 변경된 것에 주의 한다. -->
     </div>
-</div>
-<script>
-$("#customFile").on("change", function() {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
-</script>
-
-</body>
-</html>
+{{>layout/footer}}
