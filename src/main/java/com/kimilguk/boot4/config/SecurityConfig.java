@@ -1,5 +1,7 @@
 package com.kimilguk.boot4.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.boot.security.autoconfigure.web.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.kimilguk.boot4.config.auth.Role;
@@ -37,6 +41,16 @@ public class SecurityConfig {
 				.headers(headers -> headers.frameOptions(frameOptions -> frameOptions.disable())); //프레임 옵션 비활성화
 		return http.build();
 	}
+	// 데이터베이스에서 사용자 정보를 가져오는 UserDetailsManager 빈을 정의
+	@Bean
+    public UserDetailsManager userDetailsManager(DataSource dataSource) {
+        // JdbcUserDetailsManager를 사용하여 데이터베이스에서 사용자 정보를 가져옴
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
+        userDetailsManager.setUsersByUsernameQuery("SELECT username, password, enabled FROM simple_users WHERE username = ?");
+        userDetailsManager.setAuthoritiesByUsernameQuery("SELECT username, CONCAT('ROLE_', role) FROM simple_users WHERE username = ?");
+        return userDetailsManager;
+    }
+	/* 메모리용 인증과 권한 코딩 (아래)
 	@Bean
 	public UserDetailsService userDetailsService(BCryptPasswordEncoder passwordEncoder) {
 		UserDetails guest = User.builder()
@@ -57,7 +71,7 @@ public class SecurityConfig {
         // InMemoryUserDetailsManager는 테스트용으로 사용하기 위해 UserDetails정보를 메모리에 저장한다.
         return new InMemoryUserDetailsManager(guest, user, admin);
     }
-	
+	*/	
 	@Bean //BCryptPasswordEndoder 메소드로 비밀번호 암호화는 필수이다.
 	public BCryptPasswordEncoder passwordEncoder() {
 	    return new BCryptPasswordEncoder();
