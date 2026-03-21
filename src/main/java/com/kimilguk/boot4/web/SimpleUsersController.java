@@ -38,7 +38,7 @@ public class SimpleUsersController {
     @PostMapping("/simple_users/save")//회원생성 API실행
     public String simpleUsersSavePost(HttpServletResponse response,SimpleUsersDto requestDto) throws IOException {
         SimpleUsersDto usersDto = null;
-        try { //아래 구문에서 test회원 등록 시 에러를 발생 시켜보고 try~catch 문을 사용하는 방법을 확인한다.
+        try { //아래 try~catch 문을 사용하여 findByName에 에러가 발생 시 멈추지 않고 다음 줄로 진행된다.
             usersDto = simpleUsersService.findByName(requestDto.getUsername());
         }catch(Exception e){
         }
