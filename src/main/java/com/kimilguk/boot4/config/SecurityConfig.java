@@ -18,11 +18,19 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.kimilguk.boot4.config.auth.Role;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @EnableMethodSecurity //메소드 단위로 권한 체크를 할 수 있도록 활성화
 @EnableWebSecurity //http Url 접근권한을 Role 레벨 별로 사용 가능하도록 활성화
 @Configuration
 public class SecurityConfig {
+	@Bean
+	public OAuth2UserService<OAuth2UserRequest, OAuth2User> customOAuth2UserService() {
+	    return new DefaultOAuth2UserService(); //응답 받은 사용자 정보를 기본 처리하는 @빈 추가
+	}
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()) // CSRF 비활성화
@@ -33,6 +41,11 @@ public class SecurityConfig {
 						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // static 폴더만 허용
 						.anyRequest().authenticated()) // 기본요청은 모두인증 필요 해석은 뒤에서 부터
 				.formLogin(form -> form.defaultSuccessUrl("/")) //스프링시큐리티에 내장된 로그인 폼을 사용
+				.oauth2Login(oauth2 -> oauth2 //OAuth2 로그인 설정 추가
+						.userInfoEndpoint(userInfo -> userInfo //네아로 로그인 성공 후 프로바이더 에서 사용자 정보 가져오기 설정 자동생성
+								.userService(customOAuth2UserService()) //로그인 성공 시 응답 받은 정보를 저장하는 코딩을 추가
+								)
+						)
 				.logout(logout -> logout
 	                    .logoutUrl("/logout") // Logout URL
 	                    .logoutSuccessUrl("/") // Redirect after logout
