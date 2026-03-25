@@ -11,6 +11,9 @@
 - 컨트롤러 클래스에서 @GetMapping("/posts/read/{id}")처럼 Url 패스경로에 id값을 사용하면, @PathVariable("id") 애노테이션을 사용해서 매소드의 매개변수명을 명시적으로 사용해야 된다.(스프링부트 3.4 이후 부터 변경)
 - WebSecurityConfigurerAdapter가 Deprecated 되어 현재는 SecurityFilterChain을 Bean으로 등록하여야한다.(스프링부트 3 이후 부터)
 - 스프링시큐리티 설정에서 formLogout 함수가 없어지고 logout 함수로 변경됨.(단, formLogin은 있음)
+- properties 파일에 JPA Debug 용으로 쿼리에 ? 파라미터로 전송되는 값을 표시하는 설정이 변경됨(아래)
+- 기존: logging.level.org.hibernate.type=trace 에서 아래 코드로 변경됨.
+- 변경: logging.level.org.hibernate.orm.jdbc.bind=trace
 
 ### 스프링부트와 클라우드활용 강의용 깃 소스를 스프링부트3로 마이그레이션
 - 참고로, Spring Boot3 버전부터 java17 아래버전으로 컴파일되지 않습니다.(자세한정보 아래)
