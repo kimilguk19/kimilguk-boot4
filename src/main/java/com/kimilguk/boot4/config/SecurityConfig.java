@@ -30,7 +30,7 @@ public class SecurityConfig {
 	@Bean
 	public OAuth2UserService<OAuth2UserRequest, OAuth2User> customOAuth2UserService() {
 	    return new DefaultOAuth2UserService(); //응답 받은 사용자 정보를 기본 처리하는 @빈 추가
-	}
+	} //네이버 OAuth2User정보는 다음 시간에 Session에 저장 시켜서 기존 로그인과 연동되게 처리할 예정임.
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()) // CSRF 비활성화
