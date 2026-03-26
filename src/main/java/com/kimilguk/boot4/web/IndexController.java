@@ -28,6 +28,12 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService; //생성자로 주입
     private final FileService fileService;//생성자로 주입 이 필요
+    @GetMapping("/kakaomap")
+    public String kakaoMap(Model model) {
+        //공공데이터포털에서 전기차 충전소 데이터를 받아서 model객체에 담는 코딩예정(다음시간에 현재는 null)
+        model.addAttribute("response", null);
+        return "kakaomap";//resource루트의 templates폴더에 kakaomap.mustache 파일과 연결
+    }
     @GetMapping("/posts/update/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
     public String postsUpdate(@PathVariable("id") Long id, Model model,@LoginUser SessionUser user) {
     	if(user != null) {
