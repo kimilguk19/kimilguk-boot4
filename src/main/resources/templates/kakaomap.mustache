@@ -25,8 +25,8 @@ positions.push(
 );
 });
 var index = parseInt(positions.length/2);//배열은 인덱스순서 값을 필수로 가지고, 여기서는 반환 값의 개수로 구한다.
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-alert(jsonData["data"][index]["lat"]); 
+console.log(jsonData["data"][index]["lat"]); //index 순서로도 객체의 위도값을 확인
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 mapOption = {// 지도의 중심좌표(아래)
     center: new kakao.maps.LatLng(jsonData["data"][index]["lat"], jsonData["data"][index]["longi"]), 
     level: 10 // 지도의 확대 레벨

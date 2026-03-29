@@ -33,7 +33,7 @@ public class IndexController {
     @GetMapping("/kakaomap")
     public String kakaoMap(@RequestParam(value="keyword", defaultValue="천안시")String keyword, Model model) {
         //공공데이터포털에서 전기차 충전소 데이터를 받아서 model객체에 담는 코딩예정(다음시간에 현재는 null)
-        RestTemplate restTemplate = new RestTemplate();// RestTemplate 객체 생성
+        RestTemplate restTemplate = new RestTemplate();// RestTemplate 임포트 후 객체를 생성한다.
         // API URL 및 파라미터 분리
         String baseUrl = "https://bigdata.kepco.co.kr/openapi/v1/EVchargeManage.do";
         String addr = keyword; // 검색어를 addr 파라미터로 사용
