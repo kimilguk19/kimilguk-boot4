@@ -1,10 +1,37 @@
 {{>layout/header}}
 <h2>전기차 충전소 위치</h2>
+<br>
+<form action="/kakaomap" method="GET">
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <input name="keyword" type="text" placeholder="검색어를 입력해주세요" value="{{keyword}}">
+        <button class="btn btn-secondary">검색</button>
+    </div>
+</form>
 <!-- 이미지 지도를 표시할 div 입니다 -->
-<div id="map" style="width:100%;height:350px;"></div>
+<div id="map" style="width:100%;height:70vh"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=58e3e66717008e67f47f0b53356b63a7"></script>
 <script>
+var positions = [];//자바스크립트 배열 선언
+var response = "{{response}}".replace(/&quot;/g, '"');//응답json데이터에서 특수문자 &quot;를 "로 교체
+var jsonData = JSON.parse(response);//json방식 문자열을 JSON 자바스크립트 객체로 변경
+console.log(jsonData["data"]);//계층형 데이터 확인 ,예전 공공데이터포털에서는 ["items"]["item"]으로 사용되었음.
+jsonData["data"].forEach(function(element){//계층형 데이터를 반복하면서, 배열에 값 push 입력
+positions.push(
+{
+        content: "<div>"+element["csNm"]+"</div>",//충전소 이름
+        latlng: new kakao.maps.LatLng(element["lat"], element["longi"]) // 위도(latitude),경도longitude)
+    }
+);
+});
+var index = parseInt(positions.length/2);//배열은 인덱스순서 값을 필수로 가지고, 여기서는 반환 값의 개수로 구한다.
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+alert(jsonData["data"][index]["lat"]); 
+mapOption = {// 지도의 중심좌표(아래)
+    center: new kakao.maps.LatLng(jsonData["data"][index]["lat"], jsonData["data"][index]["longi"]), 
+    level: 10 // 지도의 확대 레벨
+};
+/* 아래 기존 var mapContainer  변수와 var positions  부분을 주석처리하고, 위에 새롭게 작성한 코드로 대체한다.
  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
          mapOption = { 
                       center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표 
@@ -17,6 +44,7 @@ var positions = [//여기에 스프링 컨트롤러에서 전달받은 전기차
         latlng: new kakao.maps.LatLng(33.450705, 126.570677) //위도(latitude), 경도(longitude)
     },
 ];
+*/
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다.
 for (var i = 0; i < positions.length; i ++) {
     // 마커를 생성합니다.
