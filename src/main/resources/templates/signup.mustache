@@ -1,0 +1,37 @@
+{{>layout/header}}
+<!-- 회원 등록 폼이 들어갈 자리 -->
+    <h2>회원 가입</h2>
+    <div class="col-md-12">
+        <!-- form 태그의 action 속성 값은 컨트롤러의 PostMapping 값인 Url 과 같다. 다음시간에 예정  -->
+        <form method="post" action="/signup" name="form_posts" >
+            <div class="form-group">
+                <label for="title">회원ID</label>
+               <input type="text" class="form-control" name="username" placeholder="아이디를 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="author">암호</label>
+                <input value="" type="password" class="form-control" name="password" placeholder="암호를 입력하세요"  required>
+            </div>
+            <div class="form-group">
+                <label for="role">회원권한</label>
+                <select name="role" id="role" class="form-control">
+                <option value="USER">일반사용자</option>
+                </select>
+            </div>
+        	<div class="form-group">
+                <label for="enabled">로그인가능</label>
+                <input type="radio" name="enabled" value="true" checked>허용
+            </div>
+         <a href="javascript:history.go(-1);" role="button" class="btn btn-secondary">취소</a>
+         <button type="submit" class="btn btn-primary" id="btn-member-save">등록</button>
+        </form><!-- submit 기능 때문에 닫는 폼 위치가 변경된 것에 주의 한다. -->
+    </div>
+<!-- 문서 하단에 아래 jQuery 내용도 추가한다. -->
+<script>
+//첨부파일 디자인 처리 코딩
+$("#customFile").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+{{>layout/footer}} <!-- 버튼액션은 푸터의 /js/app/index.js 경로에서 처리한다. -->

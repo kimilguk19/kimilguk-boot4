@@ -1,5 +1,7 @@
 package com.kimilguk.boot4.web;
 
+import java.io.IOException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.data.domain.Sort;
@@ -18,9 +21,13 @@ import com.kimilguk.boot4.config.auth.dto.SessionUser;
 import com.kimilguk.boot4.domain.posts.Posts;
 import com.kimilguk.boot4.service.posts.FileService;
 import com.kimilguk.boot4.service.posts.PostsService;
+import com.kimilguk.boot4.service.simple_users.SimpleUsersService;
+import com.kimilguk.boot4.util.ScriptUtils;
 import com.kimilguk.boot4.web.dto.FileDto;
 import com.kimilguk.boot4.web.dto.PostsDto;
+import com.kimilguk.boot4.web.dto.SimpleUsersDto;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor//final 매개변수가 있을 때 생성자메소드가 자동 생성된다
@@ -30,6 +37,29 @@ public class IndexController {
     private Logger logger = LoggerFactory.getLogger(getClass());
     private final PostsService postsService; //생성자로 주입
     private final FileService fileService;//생성자로 주입 이 필요
+    private final SimpleUsersService simpleUsersService; //서비스 객체생성
+    @GetMapping("/signup")//일반회원생성 디자인보기
+    public String signupGet() {
+        return "signup";//signup.mustache 생략
+    }
+    @PostMapping("/signup")//회원생성 API실행
+    public String signupPost(HttpServletResponse response,SimpleUsersDto requestDto) throws IOException {
+        SimpleUsersDto usersDto = null;//중복회원 체크용 객체생성
+        try { //아래 try~catch 문을 사용하여 findByName에 에러가 발생 시 멈추지 않고 다음 줄로 진행된다.
+            usersDto = simpleUsersService.findByName(requestDto.getUsername());
+        }catch(Exception e){
+        }
+        if(usersDto == null) { //조건추가
+        	requestDto.setRole("USER");//해킹 위험 때문에 강제로 일반사용자로 고정함.
+            simpleUsersService.save(requestDto);
+            ScriptUtils.alertAndMovePage(response, "회원가입 되었습니다. 로그인 후 이용해 주세요.", "/");
+        }else {
+        	System.out.println("중복 아이디 존재");
+            ScriptUtils.alertAndBackPage(response, "중복 아이디가 존재합니다. 아이디를 다시 입력해 주세요.");
+        }
+        return null;//"redirect:/simple_users/list";
+    }//저장 후 절대경로로 페이지이동
+
     @GetMapping("/kakaomap")
     public String kakaoMap(@RequestParam(value="keyword", defaultValue="천안시")String keyword, Model model) {
         //공공데이터포털에서 전기차 충전소 데이터를 받아서 model객체에 담는 코딩예정(다음시간에 현재는 null)
