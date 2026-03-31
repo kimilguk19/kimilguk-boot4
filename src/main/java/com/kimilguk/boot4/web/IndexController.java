@@ -38,6 +38,25 @@ public class IndexController {
     private final PostsService postsService; //생성자로 주입
     private final FileService fileService;//생성자로 주입 이 필요
     private final SimpleUsersService simpleUsersService; //서비스 객체생성
+    
+    @PostMapping("/mypage/delete")//회원삭제 API실행
+    public String mypageDelete(HttpServletResponse response,SimpleUsersDto requestDto) throws IOException {
+        simpleUsersService.delete(requestDto.getId());
+        ScriptUtils.alertAndMovePage(response, "회원탈퇴 되었습니다.", "/logout");
+        return null;//"redirect:/simple_users/list";//삭제 후 절대경로로 페이지 이동
+    }
+    @GetMapping("/mypage/update") //보안 때문에 Path변수는 삭제한다. 회원상세 디자인보기
+    public String mypageUpdate(Model model,@LoginUser SessionUser user) {
+    	//user세션에서 로그인한 사용자 이름으로 DB에서 사용자 정보를 가져와서 모델에 담는다.
+        model.addAttribute("simple_user", simpleUsersService.findByName(user.getName()));
+        return "mypage/update";
+    }
+    @PostMapping("/mypage/update")//회원수정 API실행
+    public String simpleUsersUpdatePost(HttpServletResponse response,SimpleUsersDto requestDto) throws IOException {
+        simpleUsersService.update(requestDto.getId(), requestDto);
+        ScriptUtils.alertAndMovePage(response, "수정 되었습니다.", "/mypage/update");
+        return null;//"redirect:/simple_users/update/"+requestDto.getUsername();
+    }
     @GetMapping("/signup")//일반회원생성 디자인보기
     public String signupGet() {
         return "signup";//signup.mustache 생략

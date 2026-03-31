@@ -73,6 +73,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable()) // CSRF 비활성화
 				.authorizeHttpRequests(auth -> auth//.anyRequest().permitAll()) // 모든 요청 허용
+						.requestMatchers("/mypage/**").hasRole(Role.USER.name())
 						.requestMatchers("/simple_users/**").hasRole(Role.ADMIN.name())
 						.requestMatchers("/signup/**","/posts/read/**","/h2-console/**","/error/**","/kakaomap/**").permitAll()
 						.requestMatchers("/api/**","/posts/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
