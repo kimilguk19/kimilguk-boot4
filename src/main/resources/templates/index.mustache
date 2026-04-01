@@ -23,10 +23,16 @@ $(document).ready(function() {
                     회원관리 <!--회원관리 버튼은 관리자로 로그인 해야만 보인다-->
                 </a>
                 {{/sessionRoleName}}
+                
+                {{^sessionRoleName}}<!-- 조건: 회원 중 관리자가 아닐 때 출력 -->
+				{{#memberTrue}}     <!-- 조건: 회원 중 DB에 등록된 회원일 경우 출력 -->
                 <a href="/mypage/update" class="btn btn-secondary active" role="button">
                     마이페이지
                 </a>
+                {{/memberTrue}}
+				{{/sessionRoleName}}
                 {{/sessionUserName}}
+                
                 {{^sessionUserName}}
                 <a href="/oauth2/authorization/naver" class="btn btn-success active" role="button">
                     Naver Login

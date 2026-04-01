@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.kimilguk.boot4.config.auth.LoginUser;
+import com.kimilguk.boot4.config.auth.dto.SessionUser;
 import com.kimilguk.boot4.service.posts.PostsService;
 import com.kimilguk.boot4.web.dto.PostsDto;
 
@@ -23,7 +25,8 @@ public class PostsApiController {
     private final PostsService postsService;//생성자로 주입
     //포스트매핑은 페이지 폼에서 데이터 전송하면서 접근가능(보안)
     @PostMapping("/api/posts/save")//저장:Create
-    public Long save(@RequestBody PostsDto requestDto) {
+    public Long save(@RequestBody PostsDto requestDto,@LoginUser SessionUser user) {
+    	requestDto.setAuthor(user.getName());//해킹방지용 강제입력
         return postsService.save(requestDto);
     }
     //Get매핑은 페이지 URL 주소(쿼리스트링)에서 데이터 전송 하면서 접근가능(비 보안)
@@ -35,7 +38,8 @@ public class PostsApiController {
     //전체게시물 읽기는 @RestController가 아닌 일반 @Controller에서 디자인 뷰 파일명을 반환하는 다른 클래스에서 처리할 예정이다.
     //Put매핑은 페이지 폼에서 데이터 전송하면서 접근가능(보안)
     @PutMapping("/api/posts/{id}")//수정:Update
-    public Long update(@PathVariable("id") Long id, @RequestBody PostsDto requestDto) {
+    public Long update(@PathVariable("id") Long id, @RequestBody PostsDto requestDto,@LoginUser SessionUser user) {
+    	requestDto.setAuthor(user.getName());//해킹방지용 강제입력
         return postsService.update(id, requestDto);
     }
     @DeleteMapping("/api/posts/{id}")

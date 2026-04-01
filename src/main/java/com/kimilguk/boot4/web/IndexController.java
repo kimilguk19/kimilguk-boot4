@@ -102,7 +102,7 @@ public class IndexController {
         return "kakaomap";//resource루트의 templates폴더에 kakaomap.mustache 파일과 연결
     }
     @GetMapping("/posts/update/{id}") //패스경로에 id값이 들어갔다. 아래 @PathVariable 사용해서 메소드의 매개변수에서 사용
-    public String postsUpdate(@PathVariable("id") Long id, Model model,@LoginUser SessionUser user) {
+    public String postsUpdate(HttpServletResponse response,@PathVariable("id") Long id, Model model,@LoginUser SessionUser user) throws IOException {
     	if(user != null) {
             model.addAttribute("sesstionUserName", user.getName());
             model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
@@ -113,6 +113,10 @@ public class IndexController {
         	//단일 첨부파일 처리는 이후 수업에서 작업(아래)
             FileDto fileDto = fileService.getFile(dto.getFileId());
             model.addAttribute("OrigFilename", fileDto.getOrigFilename()); 
+        }
+        if(!user.getName().equals(dto.getAuthor()) && !"ROLE_ADMIN".equals(user.getRole())) {
+            ScriptUtils.alertAndBackPage(response, "본인 글만 수정 가능합니다.!");
+            return null;//현재 메소드를 빠져 나간다==종료한다.
         }
         return "posts/posts-update";
     }
@@ -134,7 +138,10 @@ public class IndexController {
    }
     
     @GetMapping("/posts/save")//Url주소와 posts-save.mustache를 매핑 시킨다.
-    public String postsSave() {
+    public String postsSave(Model model,@LoginUser SessionUser user) {
+    	 if(user != null) {
+             model.addAttribute("sessionUserName", user.getName());
+         }
         return "posts/posts-save";
     }
 
@@ -144,6 +151,14 @@ public class IndexController {
             model.addAttribute("sessionUserName", user.getName());
             model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
             System.out.print("세션값이 있을 때 user.getName(): " + user.getName());
+            //회원DB에 등록된 사용자인지 확인
+            try {
+               SimpleUsersDto usersDto = simpleUsersService.findByName(user.getName());
+               //회원DB에 등록된 사용자만 memberTrue에 객체 값을 보낸다.
+               model.addAttribute("memberTrue", usersDto);
+            }catch (Exception e) {
+               model.addAttribute("memberTrue", null);
+            }
         }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
     	Page<Posts> postsList = postsService.postsList(pageable);
 	    model.addAttribute("postsList", postsList);//게시글목록 5개 이상 시 페이징 처리
