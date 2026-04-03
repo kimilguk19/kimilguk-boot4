@@ -12,9 +12,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RestController
 @RequestMapping("/api/gemini")
 public class GeminiController {
-    private final WebClient webClient = WebClient.create("https://generativelanguage.googleapis.com");
+    @Value("${API_URL}")
+    private String apiUrl;
     @Value("${API_KEY}")
     private String apiKey;
+    private final WebClient webClient = WebClient.create(apiUrl);
     //Mono<String>은 Spring WebFlux에서 제공하는 타입으로, 문자열 데이터를 비동기적으로 처리할 때 사용한다.
     @PostMapping("/chat")
     public Mono<String> chat(@RequestBody String input) {
@@ -26,7 +28,7 @@ public class GeminiController {
             );
     	Mono<String> result = null;
 		result = webClient.post()
-				.uri("/v1beta/models/gemini-2.5-flash:generateContent") // API 키를 URL에 포함시키는 경우
+				.uri(apiUrl) // API 키를 URL에 포함시키는 경우
 				.header("x-goog-api-key", apiKey) // API 키를 헤더에 포함시키는 경우)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(body)
