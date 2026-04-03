@@ -12,7 +12,7 @@ public class ChatController {
 	public ChatController(ChatClient.Builder builder) {
 		this.chatClient = builder.build();
 	}
-	@GetMapping("/api/gemini/chat") // 다음 슬라이드에서 테스트 후 @PostMapping 으로 변경 할 예정.
+	@GetMapping("/api/gemini/chat") //테스트 후 다음 시간에 보안에 유리한 @PostMapping 으로 변경 예정.
 	public String generate(@RequestParam(value = "message", defaultValue = "안녕, 너는 누구니?") String message) {
 		String response = "";
 		try {
