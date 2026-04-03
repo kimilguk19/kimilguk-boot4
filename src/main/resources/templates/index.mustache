@@ -13,7 +13,7 @@ $(document).ready(function() {
     <div class="col-md-12">
         <!-- 로그인 기능 영역 -->
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-7">
                 <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
                 {{#sessionUserName}}
                 Looged in as : <span id="user">{{sessionUserName}}</span>
@@ -39,6 +39,9 @@ $(document).ready(function() {
                 </a>
                 <a href="/kakaomap" class="btn btn-success active" role="button">
                     카카오 맵
+				</a>
+				<a href="/ai" class="btn btn-success active" role="button">
+                    AI 챗봇
 				</a>
                 <a href="/login" class="btn btn-warning active" role="button">
                     회원로그인

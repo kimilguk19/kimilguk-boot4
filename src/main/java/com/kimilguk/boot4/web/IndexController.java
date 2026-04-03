@@ -39,6 +39,10 @@ public class IndexController {
     private final FileService fileService;//생성자로 주입 이 필요
     private final SimpleUsersService simpleUsersService; //서비스 객체생성
     
+    @GetMapping("/ai")//ai챗봇 디자인보기
+    public String aiGet() {
+        return "ai";//ai.mustache 생략
+    }
     @PostMapping("/mypage/delete")//회원삭제 API실행
     public String mypageDelete(HttpServletResponse response,SimpleUsersDto requestDto) throws IOException {
         simpleUsersService.delete(requestDto.getId());
