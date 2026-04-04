@@ -1,5 +1,4 @@
 {{>layout/header}}
-
 <div class="px-4 py-2">
     <h2 class="font-bold text-center">AI 챗봇</h1>
     <!-- 입력 폼 -->
@@ -8,7 +7,7 @@
         <button type="submit" class="px-4 py-2 rounded">보내기</button>
     </form>
     <!-- 채팅 박스 -->
-    <div id="chat-box" class="bg-light border rounded p-3" style="height:70vh;overflow:auto;>
+    <div id="chat-box" class="bg-light border rounded p-3" style="height:70vh;overflow:auto;">
         <!-- 메시지 출력됨 -->
     </div>
 </div>
@@ -17,7 +16,6 @@
     const form = document.getElementById("chat-form");
     const input = document.getElementById("chat-input");
     const chatBox = document.getElementById("chat-box");
-    
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const userMsg = input.value.trim();
@@ -37,7 +35,6 @@
             appendMessage("Gemini", "죄송합니다. 답변을 가져오는 중 오류가 발생했습니다.");
         }
     });
-    
     function appendMessage(sender, message) {
         const div = document.createElement("div");
         div.innerHTML = `<strong>${sender}:</strong> <div class="whitespace-pre-line">${message}</div>`;
@@ -45,5 +42,4 @@
         chatBox.scrollTop = chatBox.scrollHeight;
     }
 </script>
-
 {{>layout/footer}}
