@@ -1,5 +1,7 @@
 package com.kimilguk.boot4.domain.posts;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 //JpaRepository<엔티티클래스명, PK타입>을 상속하면 기본CRUD 메소드가 자동 생성된다.
 //<T, ID>는 동일패키지안에 있는 Posts 클래스의 PK타입이 Long이므로 <Posts, Long>으로 지정한다.
@@ -7,4 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PostsRepository extends JpaRepository<Posts, Long> {
 	//save(), findAll(),수정은 엔티티의 값만수정하면 DB값도 연동된다,
 	//delete(), findById() 등 기본 CRUD 메소드가 자동으로 생성된다.
+	//springframework.data.domain 패키지를 사용해 게시판 검색기능 추가(아래)
+	Page<Posts> findByTitleContaining(String keyword, Pageable pageable);
 }

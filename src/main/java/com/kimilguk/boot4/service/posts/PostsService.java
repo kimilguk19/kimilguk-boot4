@@ -33,6 +33,10 @@ public class PostsService {
 	    Page<Posts> postsList = postsRepository.findAll(pageable);
 	    return postsList;
 	}
+	@Transactional//읽기:전체게시물 Read+검색기능 추가
+	public Page<Posts> postsList(String keyword,Pageable pageable) {
+		return postsRepository.findByTitleContaining(keyword,pageable);
+	}
 	//수정:Update 는 엔티티의 값만 수정하면 레포지토리 함수없이 DB값이 자동으로 수정된다(Context 영속성)
 	@Transactional
 	public Long update(Long id, PostsDto requestDto) {

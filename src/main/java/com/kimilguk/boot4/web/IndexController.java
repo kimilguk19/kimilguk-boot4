@@ -148,9 +148,9 @@ public class IndexController {
          }
         return "posts/posts-save";
     }
-
+    //@RequestParam 으로 검색기능 추가
     @GetMapping("/")//전체게시물 Read 접근 Api Url을 도메인 루트로 변경한다
-    public String postList(@PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model,@LoginUser SessionUser user) {
+    public String postList(@RequestParam(value="keyword", defaultValue="")String keyword, @PageableDefault(size=5,sort="id",direction=Sort.Direction.DESC) Pageable pageable, Model model,@LoginUser SessionUser user) {
     	if(user != null) {
             model.addAttribute("sessionUserName", user.getName());
             model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
@@ -164,7 +164,7 @@ public class IndexController {
                model.addAttribute("memberTrue", null);
             }
         }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
-    	Page<Posts> postsList = postsService.postsList(pageable);
+    	Page<Posts> postsList = postsService.postsList(keyword,pageable);//검색기능 추가
 	    model.addAttribute("postsList", postsList);//게시글목록 5개 이상 시 페이징 처리
 	    model.addAttribute("currPage", postsList.getPageable().getPageNumber());//현재페이지번호
 	    model.addAttribute("pageIndex", postsList.getTotalPages());//전체페이지개수
