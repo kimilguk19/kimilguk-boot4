@@ -1,6 +1,7 @@
 package com.kimilguk.boot4.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.Sort;
 
 import com.kimilguk.boot4.config.auth.LoginUser;
 import com.kimilguk.boot4.config.auth.dto.SessionUser;
+import com.kimilguk.boot4.domain.posts.ManyFile;
 import com.kimilguk.boot4.domain.posts.Posts;
 import com.kimilguk.boot4.service.posts.FileService;
+import com.kimilguk.boot4.service.posts.ManyFileService;
 import com.kimilguk.boot4.service.posts.PostsService;
 import com.kimilguk.boot4.service.simple_users.SimpleUsersService;
 import com.kimilguk.boot4.util.ScriptUtils;
@@ -38,6 +41,7 @@ public class IndexController {
     private final PostsService postsService; //생성자로 주입
     private final FileService fileService;//생성자로 주입 이 필요
     private final SimpleUsersService simpleUsersService; //서비스 객체생성
+    private final ManyFileService manyFileService;//생성자로 주입 이 필요
     
     @GetMapping("/ai")//ai챗봇 디자인보기
     public String aiGet() {
@@ -112,15 +116,20 @@ public class IndexController {
             model.addAttribute("sessionRoleName", "ROLE_ADMIN".equals(user.getRole())?"admin":null);
         }//자바의 3항 연산자: if 조건문을 축약한 구문으로 형식은 (조건문)? 조건이 참일 때 값 : 거짓일 때 값 이다.
         PostsDto dto = postsService.postsOne(id);//1개의 레코드만 가져온다.
+        if(!user.getName().equals(dto.getAuthor()) && !"ROLE_ADMIN".equals(user.getRole())) {
+            ScriptUtils.alertAndBackPage(response, "본인 글만 수정 가능합니다.!");
+            return null;//현재 메소드를 빠져 나간다==종료한다.
+        }
         model.addAttribute("post",dto);//모델객체에 담아서 mustache로 보낸다.
         if(dto.getFileId() != null) {
         	//단일 첨부파일 처리는 이후 수업에서 작업(아래)
             FileDto fileDto = fileService.getFile(dto.getFileId());
             model.addAttribute("OrigFilename", fileDto.getOrigFilename()); 
         }
-        if(!user.getName().equals(dto.getAuthor()) && !"ROLE_ADMIN".equals(user.getRole())) {
-            ScriptUtils.alertAndBackPage(response, "본인 글만 수정 가능합니다.!");
-            return null;//현재 메소드를 빠져 나간다==종료한다.
+        //멀티파일 조회처리
+        List<ManyFile> manyFileList = manyFileService.getManyFile(id);
+        if(manyFileList.size()>0) {//배열객체의 레코드 개수를 구할 때 size() 메소드를 사용한다.
+            model.addAttribute("manyFileList", manyFileList);
         }
         return "posts/posts-update";
     }
@@ -138,6 +147,11 @@ public class IndexController {
 	        FileDto fileDto = fileService.getFile(dto.getFileId());
 	        model.addAttribute("OrigFilename", fileDto.getOrigFilename()); 
 	     }
+	    //멀티파일 조회처리
+	    List<ManyFile> manyFileList = manyFileService.getManyFile(id);
+	    if(manyFileList.size()>0) {
+	        model.addAttribute("manyFileList", manyFileList);
+	    }
 	     return "posts/posts-read";
    }
     

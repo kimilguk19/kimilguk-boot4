@@ -25,6 +25,12 @@
                 <a href="/api/file_download/{{post.fileId}}">{{OrigFilename}}</a> 
                 {{/post.fileId}}
             </div>
+            <div class="form-group">
+                <label> 멀티첨부파일</label>
+                {{#manyFileList}}
+                <a href="/api/many_file_download/{{id}}">{{origFilename}}</a>
+                {{/manyFileList}}
+            </div>
             <a href="/" role="button" class="btn btn-secondary">취소</a>
             <button type="submit" class="btn btn-primary">수정</button>
         </form>

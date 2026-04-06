@@ -52,5 +52,10 @@ $("#customFile").on("change", function() {
   var fileName = $(this).val().split("\\").pop();
   $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
 });
+//멀티첨부파일 디자인 처리 코딩
+$(".many_file").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
 </script>
 {{>layout/footer}} <!-- 버튼액션은 푸터의 /js/app/index.js 경로에서 처리한다. -->
