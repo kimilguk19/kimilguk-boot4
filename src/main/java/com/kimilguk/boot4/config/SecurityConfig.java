@@ -75,7 +75,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests(auth -> auth//.anyRequest().permitAll()) // 모든 요청 허용
 						.requestMatchers("/mypage/**").hasRole(Role.USER.name())
 						.requestMatchers("/simple_users/**").hasRole(Role.ADMIN.name())
-						.requestMatchers("/ai","/api/gemini/**","/signup/**","/posts/read/**","/h2-console/**","/error/**","/kakaomap/**").permitAll()
+						.requestMatchers("/ai_rag","/ai","/api/gemini/**","/signup/**","/posts/read/**","/h2-console/**","/error/**","/kakaomap/**").permitAll()
 						.requestMatchers("/api/**","/posts/**").hasAnyRole(Role.USER.name(),Role.ADMIN.name())
 						.requestMatchers("/","/*.html").permitAll() // 특정 경로만 허용
 						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // static 폴더만 허용

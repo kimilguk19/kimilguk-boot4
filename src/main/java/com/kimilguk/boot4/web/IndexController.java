@@ -43,6 +43,10 @@ public class IndexController {
     private final SimpleUsersService simpleUsersService; //서비스 객체생성
     private final ManyFileService manyFileService;//생성자로 주입 이 필요
     
+    @GetMapping("/ai_rag")//ai챗봇 디자인보기
+    public String aiRagGet() {
+        return "ai_rag";//ai_rag.mustache 생략
+    }
     @GetMapping("/ai")//ai챗봇 디자인보기
     public String aiGet() {
         return "ai";//ai.mustache 생략
