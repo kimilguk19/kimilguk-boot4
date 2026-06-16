@@ -1,4 +1,6 @@
 ### 스프링부트 마이그레이션 목록
+- 문서기반 검색증강생성(Retrieval Augmented Generation) AI 챗봇 기능 추가한 내용(아래 URL)
+- https://github.com/kimilguk19/kimilguk-boot4/commit/f79b68b3d968a0e95f898b0a1070e92727644d53
 - 마이그레이션2 스프링부트4 프로젝트 : https://github.com/kimilguk19/kimilguk-boot4
 - 마이그레이션1 스프링부트3 프로젝트 : https://github.com/kimilguk/kimilguk-boot3
 - 초기 스프링부트2 프로젝트 : https://github.com/kimilguk/kimilguk-boot2
