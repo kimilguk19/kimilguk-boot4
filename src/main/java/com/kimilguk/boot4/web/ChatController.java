@@ -24,8 +24,7 @@ public class ChatController {
     }
 	@PostMapping("/api/gemini/rag_chat")
     public String ragChat(@RequestBody String message) {
-        // topK는 필요에 따라 조정
-        return ragService.answer(message, 3);
+        return ragService.answer(message, 3);// 검색 시 유사도Top3에 따라 조정
     }
 	@PostMapping("/api/gemini/chat") //보안에 유리한 @PostMapping, @RequestBody 로 변경.
 	public String generate(@RequestBody String message) {

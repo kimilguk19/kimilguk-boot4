@@ -34,13 +34,20 @@ public class RAGService {
 		}
 		// 외부 URL에서 파일 읽기 시도
 	    try {
-	        String externalUrl = "https://raw.githubusercontent.com/kimilguk19/kimilguk-boot4/refs/heads/boot14_02/README.md"; // URL 변경
+	    	List<String> externalUrl = new ArrayList<>();
+	        externalUrl.add(0, "https://www.global.ac.kr/user/nd80491.do"); // 학부소개
+	        externalUrl.add(1, "https://www.global.ac.kr/user/nd62080.do"); // 교수진소개
+	        externalUrl.add(2, "https://www.global.ac.kr/user/nd62019.do"); // 교육과정
+	        externalUrl.add(3, "https://www.global.ac.kr/user/nd50916.do"); // 민간자격증
+	        externalUrl.add(4, "https://www.global.ac.kr/user/nd33386.do"); // AI콘텐츠(연계전공)
 	        RestTemplate restTemplate = new RestTemplate();
-	        String urlContent = restTemplate.getForObject(externalUrl, String.class);
-	        
-	        if (urlContent != null && !urlContent.isBlank()) {
-	            docsToIndex.add(0, urlContent);
-	        }
+	        for (int i = 0; i < externalUrl.size(); i++) {
+				String url = externalUrl.get(i);
+				String urlContent = restTemplate.getForObject(url, String.class);   
+		        if (urlContent != null && !urlContent.isBlank()) {
+		            docsToIndex.add(i, urlContent);
+		        }
+			}
 	    } catch (Exception e) {
 	        System.err.println("외부 URL 파일 로드 실패: " + e.getMessage());
 	        e.printStackTrace();
@@ -95,7 +102,7 @@ public class RAGService {
 				.collect(Collectors.toList());
 		// 2) system instruction + documents 포함해서 프롬프트 구성
 		StringBuilder systemBuilder = new StringBuilder();
-		systemBuilder.append("앞으로 모든 질문에 대한 대답은 요청한 언어로 해줘. 당신은 제공된 문서를 기반으로 답변하는 챗봇입니다. 다음 문서를 참고하여 질문에 답변하세요. ");
+		systemBuilder.append("앞으로의 모든 답변은 반드시 질문한 언어와 동일한 언어로 해줘. 당신은 제공된 문서를 기반으로 답변하는 챗봇입니다. 다음 문서를 참고하여 질문에 답변하세요. ");
 		systemBuilder.append("문서에 답이 없으면 모른다고 하고 환각 증상이 없다고 말하세요. ");
 		systemBuilder.append("\n\nDocuments:\n");
 		for (int i = 0; i < topDocs.size(); i++) {
@@ -106,7 +113,7 @@ public class RAGService {
 		String systemInstruction = systemBuilder.toString();
 		System.out.println("System Instruction:\n" + systemInstruction); // 디버깅용 로그
 		// 3) ChatClient 호출 (system + user)
-		String response = chatClient.prompt().system(systemInstruction).user(userQuery).call().content();
+		String response = chatClient.prompt().system(systemInstruction).user(userQuery+" 앞으로의 모든 답변은 반드시 질문한 언어와 동일한 언어로 해줘.").call().content();
 		return response;
 	}
 
