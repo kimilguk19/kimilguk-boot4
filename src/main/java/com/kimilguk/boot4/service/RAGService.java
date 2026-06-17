@@ -1,6 +1,7 @@
-//chatClient 객체에서 제미나이 systemInstruction 사용처럼 문서기반 RAG를사용할 수 있는 코드를 알려줘. 라고 코파일럿AI에 요청한 결과(아래)
-//indexDocuments에 프로젝트 최상위(루트) 폴더의 README.md 파일 내용을 읽어 인덱싱 하도록 코드를 추가해줘. 라고 코파일럿AI에 요청한 결과(아래)
-//내부의 파일 대신에 외부 URL 경로의 파일을 불러올 수 있는 방법을 알려줘. 라고 코파일럿AI에 요청한 결과(아래)
+// AI 기반 RAG(Retrieval-Augmented Generation) 때문에 외부에 생성한 서비스파일
+// chatClient 객체에서 제미나이 systemInstruction 사용처럼 문서기반 RAG를사용할 수 있는 코드를 알려줘. 라고 코파일럿AI에 요청한 결과(아래)
+// indexDocuments에 프로젝트 최상위(루트) 폴더의 README.md 파일 내용을 읽어 인덱싱 하도록 코드를 추가해줘. 라고 코파일럿AI에 요청한 결과(아래)
+// 내부의 파일 대신에 외부 URL 경로의 파일을 불러올 수 있는 방법을 알려줘. 라고 코파일럿AI에 요청한 결과(아래)
 package com.kimilguk.boot4.service;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

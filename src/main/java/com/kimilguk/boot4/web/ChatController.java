@@ -12,16 +12,18 @@ import com.kimilguk.boot4.service.RAGService;
 @RestController
 public class ChatController {
 	private final ChatClient chatClient;// ChatClient.Builder는 자동으로 autowired(주입) 됨
-	/*
+	/* RAG 기능때문에 ChatClient.Builder를 주입받는 생성자 주석처리
 	public ChatController(ChatClient.Builder builder) {
 		this.chatClient = builder.build();
 	}
 	*/
-	private final RAGService ragService;
+	private final RAGService ragService; // RAGService 주입
+	// 생성자 주입 방식으로 RAGService와 ChatClient를 주입받음
 	public ChatController(RAGService ragService,ChatClient.Builder builder) {
-        this.ragService = ragService;
-        this.chatClient = builder.build();
+        this.ragService = ragService; // RAG 기능때문에 추가
+        this.chatClient = builder.build(); // 기존 수업 소스
     }
+	// RAG 기능을 위한 API 엔드포인트 추가
 	@PostMapping("/api/gemini/rag_chat")
     public String ragChat(@RequestBody String message) {
         return ragService.answer(message, 3);// 검색 시 유사도Top3에 따라 조정
